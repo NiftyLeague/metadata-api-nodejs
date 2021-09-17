@@ -1,5 +1,5 @@
-const HOST = 'https://birthstamps.herokuapp.com'
+const HOST = 'https://nifty-league.herokuapp.com/';
 
 module.exports = {
-  HOST
-}
+  HOST,
+};
