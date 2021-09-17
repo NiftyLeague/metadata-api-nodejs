@@ -1,4 +1,4 @@
-const HOST = 'https://nifty-league.herokuapp.com/';
+const HOST = 'https://nifty-league.herokuapp.com';
 
 module.exports = {
   HOST,
