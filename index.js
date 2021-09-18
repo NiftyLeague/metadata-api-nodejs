@@ -20,14 +20,25 @@ app.get('/', function (req, res) {
   res.send('OpenSea API for the Nifty League!');
 });
 
-app.get('/api/:network/degen/:token_id', function (req, res) {
+function resolveMetadata(req) {
   const targetNetwork = req.params.network;
   const tokenId = parseInt(req.params.token_id).toString();
   const metadataPath = `./metadata/${targetNetwork}/${tokenId}.json`;
-  const metadata = fs.existsSync(metadataPath)
+  return fs.existsSync(metadataPath)
     ? JSON.parse(fs.readFileSync(metadataPath, { encoding: 'utf8' }))
     : {};
+}
+
+app.get('/:network/degen/:token_id', function (req, res) {
+  const metadata = resolveMetadata(req);
   res.send(metadata);
+});
+
+app.get('/:network/degen/:token_id/rarity', function (req, res) {
+  const metadata = resolveMetadata(req);
+  const rarity = metadata.attributes?.find(a => a.trait_type === 'Rarity');
+  if (rarity) res.send(rarity.value);
+  else res.sendStatus(404);
 });
 
 app.listen(app.get('port'), function () {
