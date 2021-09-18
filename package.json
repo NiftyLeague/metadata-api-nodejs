@@ -4,6 +4,9 @@
   "description": "Metadata API for Nifty League NFTs",
   "repository": "github:NiftyLeague/metadata-api-nodejs.git",
   "main": "index.js",
+  "bin": {
+    "minty": "scripts/commander.js"
+  },
   "scripts": {
     "start": "node index.js",
     "test": "node test.js",
@@ -15,6 +18,7 @@
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "chalk": "^4.1.2",
     "cids": "^1.1.9",
+    "commander": "^8.2.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "ejs": "^2.6.1",

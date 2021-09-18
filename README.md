@@ -19,16 +19,32 @@ Metadata for each token can include an image, animation, attributes, scalar prop
 
 You need node.js (lts/fermium) and npm installed. If you want to do a Heroku deployment, download and install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) and run `heroku login` locally.
 
+## Setup
+
 1. Click the **Deploy to Heroku** button above to instantly get it up and running somewhere. You can pick the URL! For this example, let's say that it's `your-metadata-api.herokuapp.com`.
 2. Run `heroku git:clone -a your-metadata-api`, and `cd` into your new directory.
 3. Run `npm install`.
-4. Save the Heroku URL you picked into `config/default.js` as the `host` variable (e.g. `https://your-metadata-api.herokuapp.com`). This is the root URL for the tokens on your contract.
-5. Deploy to Heroku by committing your changes and using `git push heroku master`.
-6. Visit your token's metadata at https://your-metadata-api.herokuapp.com/api/{network}/token/{token_id}.
+4. Run `npm link` to add the `minty` command to your `$PATH`. This makes it easier to run Minty from anywhere on your computer.
+5. Add a `.env` file using `.sample.env` as a reference.
+6. Save the Heroku URL you picked into `config/default.js` as the `host` variable (e.g. `https://your-metadata-api.herokuapp.com`). This is the root URL for the tokens on your contract.
+7. Deploy to Heroku by committing your changes and using `git push heroku master`.
+8. Visit your token's metadata at https://your-metadata-api.herokuapp.com/{network}/token/{token_id}.
 
----
+## Quick Start
 
-If you wish to turn on the image and metadata generator:
+1A. Run the `start-local-environment.sh` script to start the local Ethereum testnet and IPFS daemon:
+
+```shell
+./start-local-environment.sh
+
+> Initializing daemon...
+> Started HTTP and WebSocket JSON-RPC server at http://127.0.0.1:8545/
+> ...
+```
+
+> This command continues to run. All further commands must be entered in another terminal window.
+
+1B. Alternatively you can run ipfs yourself
 
 > if there's no local ipfs repo at `$HOME/.ipfs`, initialize one:
 
@@ -42,11 +58,13 @@ npx go-ipfs init
 npx go-ipfs daemon
 ```
 
-> in a fifth terminal window, run our NFT task runner
+---
 
-```bash
-yarn nft-task-runner
-```
+2. Run `npm run start` to start up your local API on post 5000
+
+3. Run `npm run nft-task-runner` to start up the task runner
+
+---
 
 ## Minting Tokens
 
