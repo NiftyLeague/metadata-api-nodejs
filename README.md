@@ -26,6 +26,28 @@ You need node.js (lts/fermium) and npm installed. If you want to do a Heroku dep
 5. Deploy to Heroku by committing your changes and using `git push heroku master`.
 6. Visit your token's metadata at https://your-metadata-api.herokuapp.com/api/{network}/token/{token_id}.
 
+---
+
+If you wish to turn on the image and metadata generator:
+
+> if there's no local ipfs repo at `$HOME/.ipfs`, initialize one:
+
+```bash
+npx go-ipfs init
+```
+
+> run local ipfs daemon
+
+```bash
+npx go-ipfs daemon
+```
+
+> in a fifth terminal window, run our NFT task runner
+
+```bash
+yarn nft-task-runner
+```
+
 ## Minting Tokens
 
 Here's a [tutorial on setting up a mintable NFT contract](https://docs.opensea.io/docs). Alternatively, you can have your buyers mint the tokens for you (and pay the gas to do that) at purchase-time, using the [OpenSea Crowdsale Tutorial](https://docs.opensea.io/docs/opensea-initial-item-sale-tutorial).

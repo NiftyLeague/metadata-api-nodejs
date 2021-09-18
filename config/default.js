@@ -8,8 +8,7 @@ const config = {
   },
 
   metadata: {
-    description:
-      "🎮 Original collection of your favorite 10k DEGENs created by The Nifty League's multi-talented community!",
+    description: 'Original collection of your favorite 10k DEGENs 🎮',
     externalURL: 'https://nifty-league.com/degens',
   },
 
