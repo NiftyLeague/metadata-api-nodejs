@@ -1,0 +1,69 @@
+{
+  "name": "Nifty Andy",
+  "image": "ipfs://bafybeifxrkma5fw4nhw5wuvfx7tcl42j4buimzfyije645xq32royrlhk4/nifty-degens/1.png",
+  "description": "🎮 Original collection of your favorite 10k DEGENs created by The Nifty League's multi-talented community!",
+  "external_url": "https://nifty-league.com/degens/1",
+  "attributes": [
+    {
+      "display_type": "number",
+      "trait_type": "Generation",
+      "value": 1
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Tribe",
+      "value": "Ape"
+    },
+    {
+      "trait_type": "Skin Color",
+      "value": "White"
+    },
+    {
+      "trait_type": "Fur Color",
+      "value": "Allegiance"
+    },
+    {
+      "trait_type": "Eye Color",
+      "value": "Atmosphere"
+    },
+    {
+      "trait_type": "Pupil Color",
+      "value": "River Styx"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Cigarette"
+    },
+    {
+      "trait_type": "Footwear",
+      "value": "Blue Winged Shoes"
+    },
+    {
+      "trait_type": "Hat",
+      "value": "Gray Beanie"
+    },
+    {
+      "trait_type": "Wrist",
+      "value": "Gold Watch"
+    },
+    {
+      "trait_type": "Hands",
+      "value": "Blue Boxing Gloves"
+    },
+    {
+      "trait_type": "Neckwear",
+      "value": "Titanium Dollar Sign Necklace"
+    },
+    {
+      "trait_type": "Left Item",
+      "value": "Banana"
+    },
+    {
+      "trait_type": "Right Item",
+      "value": "Controller"
+    }
+  ]
+}

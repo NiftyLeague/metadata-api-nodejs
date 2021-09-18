@@ -1,7 +1,8 @@
 {
   "name": "metadata-api-nodejs",
   "version": "1.0.0",
-  "description": "Sample metadata API for crypto collectibles",
+  "description": "Metadata API for Nifty League NFTs",
+  "repository": "github:NiftyLeague/metadata-api-nodejs.git",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -13,20 +14,24 @@
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "chalk": "^4.1.2",
+    "cids": "^1.1.9",
     "dotenv": "^10.0.0",
     "ejs": "^2.6.1",
+    "ethers": "^5.4.7",
     "express": "^4.16.4",
     "getconfig": "^4.5.0",
     "hardhat": "^2.6.4",
     "ipfs-http-client": "^52.0.5",
+    "it-all": "^1.0.5",
     "json-colorizer": "^2.2.2",
-    "moment": "^2.22.2"
+    "moment": "^2.22.2",
+    "uint8arrays": "^3.0.0"
   },
   "devDependencies": {
     "request": "^2.81.0",
     "tape": "^4.7.0"
   },
   "engines": {
-    "node": "8.11.2"
+    "node": "14.17.6"
   }
 }

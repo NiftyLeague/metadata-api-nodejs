@@ -9,7 +9,7 @@ const config = {
 
   metadata: {
     description:
-      'Collection of 10000 self-composable Nifty League DEGENs on the Ethereum blockchain',
+      "🎮 Original collection of your favorite 10k DEGENs created by The Nifty League's multi-talented community!",
     externalURL: 'https://nifty-league.com/degens',
   },
 
@@ -21,7 +21,7 @@ const config = {
   },
 
   ipfs: {
-    ipfsBaseDirName: 'nifty-degens',
+    baseDirName: 'nifty-degens',
     // The pinningService config tells minty what remote pinning service to use for pinning the IPFS data for a token.
     // The values are read in from environment variables, to discourage checking credentials into source control.
     // You can make things easy by creating a .env file with your environment variable definitions. See the example files
@@ -32,11 +32,10 @@ const config = {
       key: '$$PINNING_SERVICE_KEY',
     },
     // If you're running IPFS on a non-default port, update this URL. If you're using the IPFS defaults, you should be all set.
-    ipfsApiURL: 'http://localhost:5001',
+    apiURL: 'http://localhost:5001',
     // If you're running the local IPFS gateway on a non-default port, or if you want to use a public gatway when displaying IPFS gateway urls, edit this.
     host: '$$IPFS_HOST',
-    ipfsGatewayURL: 'https://${self.host}/ipfs',
-    ipnsGatewayURL: 'https://${self.host}/ipns',
+    gatewayURL: 'https://${self.host}/ipfs',
   },
 };
 

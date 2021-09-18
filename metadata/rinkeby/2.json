@@ -1,0 +1,33 @@
+{
+  "name": "Doge DEGEN #2",
+  "image": "ipfs://bafybeifi52ykywmbyry3a33ihhjoexgavwok4zddlvg2ftt76to6osznyq/nifty-degens/2.png",
+  "description": "🎮 Original collection of your favorite 10k DEGENs created by The Nifty League's multi-talented community!",
+  "external_url": "https://nifty-league.com/degens/2",
+  "attributes": [
+    {
+      "display_type": "number",
+      "trait_type": "Generation",
+      "value": 1
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Meta"
+    },
+    {
+      "trait_type": "Tribe",
+      "value": "Doge"
+    },
+    {
+      "trait_type": "Skin Color",
+      "value": "Ripe Pumpkin"
+    },
+    {
+      "trait_type": "Fur Color",
+      "value": "White"
+    },
+    {
+      "trait_type": "Eye Color",
+      "value": "White"
+    }
+  ]
+}

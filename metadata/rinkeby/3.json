@@ -1,0 +1,37 @@
+{
+  "name": "Cat DEGEN #3",
+  "image": "ipfs://bafybeihj2h6hbpzpq3vdf3kmvcdldhififdtxpcqdjpxia4a5vdx5xqvxq/nifty-degens/3.mp4",
+  "description": "🎮 Original collection of your favorite 10k DEGENs created by The Nifty League's multi-talented community!",
+  "external_url": "https://nifty-league.com/degens/3",
+  "attributes": [
+    {
+      "display_type": "number",
+      "trait_type": "Generation",
+      "value": 1
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Tribe",
+      "value": "Cat"
+    },
+    {
+      "trait_type": "Skin Color",
+      "value": "Icy Brook"
+    },
+    {
+      "trait_type": "Fur Color",
+      "value": "White"
+    },
+    {
+      "trait_type": "Eye Color",
+      "value": "Primrose Path"
+    },
+    {
+      "trait_type": "Pupil Color",
+      "value": "River Styx"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 require('dotenv').config();
-require('@typechain/hardhat');
+require('@nomiclabs/hardhat-ethers');
 const config = require('getconfig');
 
 module.exports = {
