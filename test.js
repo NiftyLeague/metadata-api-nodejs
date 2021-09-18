@@ -3,10 +3,10 @@ const request = require('request');
 const test = require('tape');
 
 // Start the app
-const env = Object.assign({}, process.env, {PORT: 5000});
-const child = spawn('node', ['index.js'], {env});
+const env = Object.assign({}, process.env, { PORT: 5000 });
+const child = spawn('node', ['index.js'], { env });
 
-test('responds to requests', (t) => {
+test('responds to requests', t => {
   t.plan(4);
 
   // Wait until the server is ready
@@ -21,8 +21,7 @@ test('responds to requests', (t) => {
       // Successful response
       t.equal(response.statusCode, 200);
       // Assert content checks
-      t.notEqual(body.indexOf("Get ready"), -1);
-      t.notEqual(body.indexOf("for OpenSea!"), -1);
+      t.notEqual(body.indexOf('OpenSea API for the Nifty League!'), -1);
     });
   });
 });

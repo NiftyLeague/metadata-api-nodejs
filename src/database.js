@@ -1,22 +1,78 @@
 module.exports = {
-  "1": {
-    "name": "Chunky Monkey",
-    "birthday": "10-18"
+  1: {
+    name: 'Nifty Andy',
+    Rarity: 'Common',
+    Tribe: 'Ape',
+    'Skin Color': 'White',
+    'Fur Color': 'Allegiance',
+    'Eye Color': 'Atmosphere',
+    'Pupil Color': 'River Styx',
+    Mouth: 'Cigarette',
+    Footwear: 'Blue Winged Shoes',
+    Hat: 'Gray Beanie',
+    Wrist: 'Gold Watch',
+    Hands: 'Blue Boxing Gloves',
+    Neckwear: 'Titanium Dollar Sign Necklace',
+    'Left Item': 'Banana',
+    'Right Item': 'Controller',
   },
-  "2": {
-    "name": "Flerp Derp",
-    "birthday": "01-08"
+  2: {
+    name: '',
+    Rarity: 'Common',
+    Tribe: 'Alien',
+    'Skin Color': 'Cherry Soda',
+    'Eye Color': 'Atmosphere',
+    'Pupil Color': 'River Styx',
+    Mouth: 'Joint',
+    Top: 'Orange Longsleeve Collared',
+    Outerwear: 'Green Elbowpatch Jacket',
+    Bottom: 'Blue Track Pants',
+    Footwear: 'Blue Winged Shoes',
+    Hat: 'Gold Crown',
+    Eyewear: 'Yellow Skull Eyepatch',
+    Neckwear: 'Platinum Dollar Sign Necklace',
+    'Left Item': 'Energy Sword',
+    'Right Item': 'Diamond',
   },
-  "3": {
-    "name": "Buttle McFuddle",
-    "birthday": "01-22"
+  3: {
+    name: '',
+    Rarity: 'Common',
+    Tribe: 'Doge',
+    'Skin Color': 'Ripe Pumpkin',
+    'Fur Color': 'White',
+    'Eye Color': 'White',
+    'Pupil Color': 'River Styx',
   },
-  "4": {
-    "name": "Quiero Pancakes",
-    "birthday": "03-04"
+  4: {
+    name: 'Quiero Pancakes',
+    Rarity: 'Legendary',
+    Tribe: 'Frog',
+    'Skin Color': 'Begonia',
+    'Eye Color': 'Atmosphere',
+    'Pupil Color': 'River Styx',
+    Mouth: 'Cigarette',
+    Footwear: 'Blue Winged Shoes',
+    Hat: 'Gray Beanie',
+    Wrist: 'Gold Watch',
+    Hands: 'Blue Boxing Gloves',
+    Neckwear: 'Titanium Dollar Sign Necklace',
+    'Left Item': 'Banana',
+    'Right Item': 'Controller',
   },
-  "5": {
-    "name": "Guino the Penguin",
-    "birthday": "03-09"
-  }
-}
+  5: {
+    name: 'Pink Pepe',
+    Rarity: 'Rare',
+    Tribe: 'Frog',
+    'Skin Color': 'White',
+    'Eye Color': 'Atmosphere',
+    'Pupil Color': 'River Styx',
+    Mouth: 'Cigarette',
+    Footwear: 'Blue Winged Shoes',
+    Hat: 'Gray Beanie',
+    Wrist: 'Gold Watch',
+    Hands: 'Blue Boxing Gloves',
+    Neckwear: 'Titanium Dollar Sign Necklace',
+    'Left Item': 'Banana',
+    'Right Item': 'Controller',
+  },
+};

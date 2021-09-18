@@ -1,7 +1,17 @@
 {
-  "name": "Metadata API for NFTs",
-  "description": "Sample metadata API for crypto collectibles",
+  "name": "Nifty League Degens",
+  "description": "Collection of 10000 self-composable Nifty League DEGENs on the Ethereum blockchain",
   "repository": "https://github.com/ProjectOpenSea/metadata-api-nodejs",
-  "logo": "https://storage.googleapis.com/opensea-rinkeby/0x7dca125b1e805dc88814aed7ccc810f677d3e1db.png",
-  "keywords": ["nft", "crypto", "opensea", "erc721", "erc1155", "node", "express", "static"]
+  "logo": "https://github.com/NiftyLeague/Nifty-League-Images/blob/main/NFTL.png",
+  "keywords": [
+    "nft",
+    "crypto",
+    "opensea",
+    "erc721",
+    "gamefi",
+    "gaming",
+    "node",
+    "express",
+    "static"
+  ]
 }
