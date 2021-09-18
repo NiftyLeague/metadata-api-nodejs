@@ -23,8 +23,6 @@ const {
   RIGHT_ITEMS,
 } = require('./traitNames');
 
-const HOST = 'https://nifty-league.herokuapp.com';
-
 const CHARACTER_RARITIES = ['Common', 'Rare', 'Meta', 'Legendary'];
 
 const CHARACTER_TRAIT_TYPES = [
@@ -80,6 +78,5 @@ const TRAIT_VALUE_MAP = {
 module.exports = {
   CHARACTER_RARITIES,
   CHARACTER_TRAIT_TYPES,
-  HOST,
   TRAIT_VALUE_MAP,
 };

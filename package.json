@@ -5,13 +5,21 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node test.js"
+    "test": "node test.js",
+    "nft-task-runner": "hardhat run scripts/nftTaskRunner.js"
   },
   "author": "Alex Atallah <alex.atallah@opensea.io>",
   "license": "MIT",
   "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "chalk": "^4.1.2",
+    "dotenv": "^10.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "getconfig": "^4.5.0",
+    "hardhat": "^2.6.4",
+    "ipfs-http-client": "^52.0.5",
+    "json-colorizer": "^2.2.2",
     "moment": "^2.22.2"
   },
   "devDependencies": {
