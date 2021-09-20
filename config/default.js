@@ -1,5 +1,6 @@
 const config = {
   host: 'https://api.nifty-league.com',
+  webhookSecret: '$$WEBHOOK_SECRET',
 
   hardhat: {
     defaultNetwork: '$$HARDHAT_NETWORK',

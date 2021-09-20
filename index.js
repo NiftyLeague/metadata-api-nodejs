@@ -1,7 +1,8 @@
 require('dotenv').config();
+const config = require('getconfig');
+const cors = require('cors');
 const express = require('express');
 const fetch = require('node-fetch');
-const cors = require('cors');
 const path = require('path');
 
 const PORT = process.env.PORT || 5000;
@@ -37,10 +38,14 @@ app.get('/:network/degen/:token_id/rarity', async function (req, res) {
   else res.sendStatus(404);
 });
 
-// app.post('/:network/webhooks/degen', function (req, res) {
-//   const targetNetwork = req.params.network;
-
-// });
+app.post(
+  `/:network/webhooks/degen/${config.webhookSecret}`,
+  function (req, res) {
+    const targetNetwork = req.params.network;
+    console.log('WEBHOOK REQUEST', req);
+    console.log('WEBHOOK RESPONSE', res);
+  }
+);
 
 app.listen(app.get('port'), function () {
   console.log('Node app is running on port', app.get('port'));
