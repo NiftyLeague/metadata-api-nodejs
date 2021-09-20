@@ -18,6 +18,13 @@ const config = {
     version: '$$UNITY_IMAGE_GENERATOR_VERSION',
   },
 
+  s3: {
+    accessKeyId: '$$S3_ACCESS_ID',
+    secretAccessKey: '$$S3_SECRET',
+    bucket: 'nifty-league',
+    baseDirectory: 'degens',
+  },
+
   ipfs: {
     baseDirName: 'nifty-degens',
     authorizationDEV: '$$INFURA_AUTHORIZATION_DEV',

@@ -1,11 +1,9 @@
 /* eslint-disable no-use-before-define, no-await-in-loop */
 const fs = require('fs');
-const { ethers } = require('hardhat');
 const config = require('getconfig');
 const chalk = require('chalk');
 const colorize = require('json-colorizer');
 const { MakeMinty } = require('./minty');
-const getContractFactory = require('./getContractFactory');
 
 const colorizeOptions = {
   pretty: true,
@@ -17,7 +15,6 @@ const colorizeOptions = {
 
 async function main() {
   const targetNetwork = config.hardhat.defaultNetwork;
-  // const contract = await getContractFactory();
 
   const imagesDir = `./public/images/${targetNetwork}`;
   if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir);
