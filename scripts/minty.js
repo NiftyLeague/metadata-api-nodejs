@@ -59,7 +59,6 @@ class Minty {
     this._initialized = false;
     this.contract = null;
     this.ipfs = null;
-    this.metadataDir = null;
   }
 
   async init() {
@@ -73,11 +72,18 @@ class Minty {
     this.contract = await getContractFactory();
 
     // create a local IPFS node
-    this.ipfs = ipfsClient.create(config.ipfs.apiURL);
-    this.metadataDir = `/${config.ipfs.baseDirName}/${this.targetNetwork}/metadata`;
-    await this.ipfs.files.mkdir(this.metadataDir, {
-      ...ipfsOptions,
-      parents: true,
+    this.ipfs = ipfsClient.create({
+      protocol: config.ipfs.protocol,
+      host: config.ipfs.host,
+      port: config.ipfs.port,
+      path: config.ipfs.path,
+      headers: {
+        authorization: `Basic ${
+          this.targetNetwork === 'mainnet'
+            ? config.ipfs.authorizationPROD
+            : config.ipfs.authorizationDEV
+        }`,
+      },
     });
 
     this._initialized = true;
@@ -114,6 +120,7 @@ class Minty {
     // it gives us URIs with descriptive filenames in them e.g.
     // 'ipfs://QmaNZ2FCgvBPqnxtkbToVVbK2Nes6xk5K4Ns6BsmkPucAM/cat-pic.png' instead of
     // 'ipfs://QmaNZ2FCgvBPqnxtkbToVVbK2Nes6xk5K4Ns6BsmkPucAM'
+    console.log('Adding image to IPFS');
     const imgPath = `/${config.ipfs.baseDirName}/${basename}`;
     const { cid: assetCid } = await this.ipfs.add(
       { path: imgPath, content },
@@ -129,21 +136,11 @@ class Minty {
       assetURI
     );
 
-    // unpin old metadata directory hash
-    const { cid: oldMetadataCid } = await this.ipfs.files.stat(
-      this.metadataDir
+    const metadataPath = `/${config.ipfs.baseDirName}/metadata/${tokenId}`;
+    const { cid: metadataCid } = await this.ipfs.add(
+      { path: metadataPath, content: JSON.stringify(metadata) },
+      ipfsOptions
     );
-    await this.unpin(oldMetadataCid);
-
-    // add the metadata to IPFS Mutable File System (MFS)
-    // the CID hash of the directory will change with every file modified
-    const metadataPath = `${this.metadataDir}/${tokenId}`;
-    await this.ipfs.files.write(metadataPath, JSON.stringify(metadata), {
-      ...ipfsOptions,
-      create: true,
-      parents: true,
-    });
-    const { cid: metadataCid } = await this.ipfs.files.stat(this.metadataDir);
     const metadataURI = ensureIpfsUriPrefix(metadataCid) + `/${tokenId}`;
 
     return {
@@ -191,13 +188,9 @@ class Minty {
     const filePath = `./public/images/${this.targetNetwork}/${tokenId}.${
       rarity < 3 ? 'png' : 'mp4'
     }`;
-    if (config.avoidImageOverride === 'true' && fs.existsSync(filePath)) {
-      console.log(`Image already exists at ${filePath}`);
-    } else {
-      const url = generateImageURL(traits, rarity);
-      console.log('Unity image url:', url);
-      await downloadImage(url, filePath);
-    }
+    const url = generateImageURL(traits, rarity);
+    console.log('Unity image url:', url);
+    await downloadImage(url, filePath);
     return filePath;
   }
 
@@ -451,9 +444,6 @@ class Minty {
    */
   async pin(cidOrURI) {
     const cid = extractCID(cidOrURI);
-    // Make sure IPFS is set up to use our preferred pinning service.
-    await this._configurePinningService();
-
     // Check if we've already pinned this CID to avoid a "duplicate pin" error.
     const pinned = await this.isPinned(cid);
     if (pinned) {
@@ -463,33 +453,23 @@ class Minty {
     // Ask the remote service to pin the content.
     // Behind the scenes, this will cause the pinning service to connect to our local IPFS node
     // and fetch the data using Bitswap, IPFS's transfer protocol.
-    await this.ipfs.pin.remote.add(cid, {
-      service: config.ipfs.pinningService.name,
-    });
+    await this.ipfs.pin.add(cid);
   }
 
   /**
    * Request that the remote pinning service unpin the given CID or ipfs URI.
    *
-   * @param {CID} cid - a CID
+   * @param {string|CID} cid - a CID
    * @returns {Promise<void>}
    */
   async unpin(cid) {
-    // Make sure IPFS is set up to use our preferred pinning service.
-    await this._configurePinningService();
-
     // Check if we've actually pinned this CID to be removed.
     const pinned = await this.isPinned(cid);
     if (pinned) {
       // Ask the remote service to unpin the content.
       // Removes pin object matching query allowing it to be garbage collected
-      console.log(
-        `Unpinning CID (${cid}) from ${config.ipfs.pinningService.name}`
-      );
-      await this.ipfs.pin.remote.rmAll({
-        cid: [cid],
-        service: config.ipfs.pinningService.name,
-      });
+      console.log(`Unpinning CID (${cid})`);
+      await this.ipfs.pin.rm(typeof cid === 'string' ? new CID(cid) : cid);
     }
   }
 
@@ -501,52 +481,13 @@ class Minty {
    */
   async isPinned(cid) {
     const opts = {
-      service: config.ipfs.pinningService.name,
-      cid: [typeof cid === 'string' ? new CID(cid) : cid], // ls expects an array of cids
+      cid: [[typeof cid === 'string' ? new CID(cid) : cid]], // ls expects an array of cids
     };
     // eslint-disable-next-line no-unused-vars
-    for await (const result of this.ipfs.pin.remote.ls(opts)) {
+    for await (const result of this.ipfs.pin.ls(opts)) {
       return true;
     }
     return false;
-  }
-
-  /**
-   * Configure IPFS to use the remote pinning service from our config.
-   *
-   * @private
-   */
-  async _configurePinningService() {
-    if (!config.ipfs.pinningService) {
-      throw new Error(
-        `No pinningService set up in minty config. Unable to pin.`
-      );
-    }
-
-    // check if the service has already been added to js-ipfs
-    for (const svc of await this.ipfs.pin.remote.service.ls()) {
-      if (svc.service === config.ipfs.pinningService.name) {
-        // service is already configured, no need to do anything
-        return;
-      }
-    }
-
-    // add the service to IPFS
-    const { name, endpoint, key } = config.ipfs.pinningService;
-    if (!name) {
-      throw new Error('No name configured for pinning service');
-    }
-    if (!endpoint) {
-      throw new Error(`No endpoint configured for pinning service ${name}`);
-    }
-    if (!key) {
-      throw new Error(
-        `No key configured for pinning service ${name}.` +
-          `If the config references an environment variable, e.g. '$$PINATA_API_TOKEN', ` +
-          `make sure that the variable is defined.`
-      );
-    }
-    await this.ipfs.pin.remote.service.add(name, { endpoint, key });
   }
 }
 

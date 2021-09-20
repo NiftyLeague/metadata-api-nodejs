@@ -30,7 +30,7 @@ function ensureIpfsUriPrefix(cidOrURI) {
  * @returns - an HTTP url to view the IPFS object on the configured gateway.
  */
 function makeGatewayURL(ipfsURI) {
-  return config.ipfs.gatewayUrl + '/' + stripIpfsUriPrefix(ipfsURI);
+  return config.ipfs.gatewayURL + '/' + stripIpfsUriPrefix(ipfsURI);
 }
 
 /**

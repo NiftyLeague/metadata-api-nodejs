@@ -1,5 +1,5 @@
 const config = {
-  host: 'https://nifty-league.herokuapp.com',
+  host: 'https://api.nifty-league.com',
 
   hardhat: {
     defaultNetwork: '$$HARDHAT_NETWORK',
@@ -13,7 +13,6 @@ const config = {
   },
 
   imageGenerator: {
-    avoidImageOverride: '$$AVOID_IMAGE_OVERRIDE',
     baseURL: '$$UNITY_IMAGE_GENERATOR_BASE_URL',
     secret: '$$UNITY_IMAGE_GENERATOR_SECRET',
     version: '$$UNITY_IMAGE_GENERATOR_VERSION',
@@ -21,20 +20,18 @@ const config = {
 
   ipfs: {
     baseDirName: 'nifty-degens',
-    // The pinningService config tells minty what remote pinning service to use for pinning the IPFS data for a token.
-    // The values are read in from environment variables, to discourage checking credentials into source control.
-    // You can make things easy by creating a .env file with your environment variable definitions. See the example files
-    // pinata.env.example and nft.storage.env.example in this directory for templates you can use to get up and running.
-    pinningService: {
-      name: '$$PINNING_SERVICE_NAME',
-      endpoint: '$$PINNING_SERVICE_ENDPOINT',
-      key: '$$PINNING_SERVICE_KEY',
-    },
+    authorizationDEV: '$$INFURA_AUTHORIZATION_DEV',
+    authorizationPROD: '$$INFURA_AUTHORIZATION_PROD',
+    // Can use http for local IPFS node
+    protocol: 'https',
+    // For local IPFS nodes you can set this to http://localhost:5001
+    host: 'ipfs.infura.io',
     // If you're running IPFS on a non-default port, update this URL. If you're using the IPFS defaults, you should be all set.
-    apiURL: 'http://localhost:5001',
+    port: '5001',
+    // This default it already set by ipfs-http-client but can be updated if necessary
+    path: 'api/v0',
     // If you're running the local IPFS gateway on a non-default port, or if you want to use a public gatway when displaying IPFS gateway urls, edit this.
-    host: '$$IPFS_HOST',
-    gatewayURL: 'https://${self.host}/ipfs',
+    gatewayURL: 'https://gateway.ipfs.io/ipfs',
   },
 };
 

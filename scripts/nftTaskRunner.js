@@ -1,4 +1,5 @@
 /* eslint-disable no-use-before-define, no-await-in-loop */
+require('dotenv').config();
 const fs = require('fs');
 const { ethers } = require('hardhat');
 const config = require('getconfig');
@@ -25,11 +26,12 @@ async function main() {
   if (!fs.existsSync(metadataDir)) fs.mkdirSync(metadataDir);
 
   const minty = await MakeMinty();
-  const tokenIds = [1, 2, 3, 4, 5];
+  // const tokenIds = [1, 2, 3, 4, 5];
+  const tokenIds = [6];
   for (const tokenId of tokenIds) {
+    // TODO: Check for token metadata to avoid processing new generation
     // await getNFT(minty, tokenId);
-    const { metadata, metadataURI } = await getOrGenerateNFT(minty, tokenId);
-    await pinNFTData(minty, tokenId, metadata, metadataURI);
+    await getOrGenerateNFT(minty, tokenId);
   }
 }
 
