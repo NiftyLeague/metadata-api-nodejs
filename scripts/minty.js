@@ -124,7 +124,6 @@ class Minty {
     );
     console.log('✅ Image pinned to IPFS');
 
-    const parsedPath = path.parse(basename);
     const imageAsset = await uploadToS3(
       `${this.targetNetwork}/images/${basename}`,
       content
@@ -132,7 +131,7 @@ class Minty {
     console.log('✅ Image uploaded to S3');
 
     // make the NFT metadata JSON
-    const assetURI = imageAsset.Location;
+    const assetURI = ensureIpfsUriPrefix(assetCid) + imgPath;
     const metadata = await this.makeNFTMetadata(
       tokenId,
       traits,
@@ -235,7 +234,7 @@ class Minty {
       `${this.targetNetwork}/metadata/${tokenId}.json`,
       JSON.stringify(metadata, null, 2)
     );
-    console.log("✅ Metadata uploaded to S3");
+    console.log('✅ Metadata uploaded to S3');
     return metadata;
   }
 

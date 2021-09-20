@@ -15,15 +15,12 @@ const colorizeOptions = {
 
 async function main() {
   const targetNetwork = config.hardhat.defaultNetwork;
-
   const imagesDir = `./public/images/${targetNetwork}`;
   if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir);
-  const metadataDir = `./metadata/${targetNetwork}`;
-  if (!fs.existsSync(metadataDir)) fs.mkdirSync(metadataDir);
 
   const minty = await MakeMinty();
   // const tokenIds = [1, 2, 3, 4, 5, 6];
-  const tokenIds = [6];
+  const tokenIds = [5];
   for (const tokenId of tokenIds) {
     await safeGenerateNFT(minty, tokenId);
   }
