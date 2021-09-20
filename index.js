@@ -42,8 +42,8 @@ app.post(
   `/:network/webhooks/degen/${config.webhookSecret}`,
   function (req, res) {
     const targetNetwork = req.params.network;
-    console.log('WEBHOOK REQUEST', req);
-    console.log('WEBHOOK RESPONSE', res);
+    console.log('WEBHOOK REQUEST', req.body);
+    res.sendStatus(200);
   }
 );
 
