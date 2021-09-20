@@ -5,7 +5,7 @@ const config = require('getconfig');
 /**
  * Returns random background option based on probabilities
  */
-function raritySelector() {
+function raritySelector(tokenId) {
   const backgroundOptions = [
     ...Array(90).fill(0),
     ...Array(6).fill(1),
@@ -15,7 +15,7 @@ function raritySelector() {
     3,
   ];
   const idx = Math.floor(Math.random() * backgroundOptions.length);
-  return backgroundOptions[idx];
+  return Math.min(backgroundOptions[idx], tokenId > 3 ? 3 : 1);
 }
 
 /**

@@ -156,7 +156,7 @@ class Minty {
    */
   async generateNFT(tokenId) {
     const traits = await this.getCharacterTraits(tokenId);
-    const rarity = raritySelector();
+    const rarity = raritySelector(tokenId);
     const filePath = await this.generateImage(tokenId, traits, rarity);
     const content = await fs.promises.readFile(filePath);
     // Cleanup the local file
