@@ -26,22 +26,20 @@ async function main() {
   if (!fs.existsSync(metadataDir)) fs.mkdirSync(metadataDir);
 
   const minty = await MakeMinty();
-  // const tokenIds = [1, 2, 3, 4, 5];
-  const tokenIds = [6];
+  const tokenIds = [1, 2, 3, 4, 5, 6];
   for (const tokenId of tokenIds) {
-    // TODO: Check for token metadata to avoid processing new generation
-    // await getNFT(minty, tokenId);
     await getOrGenerateNFT(minty, tokenId);
   }
 }
 
 async function getOrGenerateNFT(minty, tokenId) {
+  // TODO: Check for token metadata to avoid processing new generation
+  // await getNFT(minty, tokenId);
+  console.log(`Generating asset and metadata for token id ${tokenId}:`);
   const nft = await minty.generateNFT(tokenId);
   console.log('');
   alignOutput([
     ['Token ID:', chalk.green(nft.tokenId)],
-    ['Metadata Address:', chalk.blue(nft.metadataURI)],
-    ['Metadata Gateway URL:', chalk.blue(nft.metadataGatewayURL)],
     ['Asset Address:', chalk.blue(nft.assetURI)],
     ['Asset Gateway URL:', chalk.blue(nft.assetGatewayURL)],
   ]);
@@ -72,17 +70,6 @@ async function getNFT(minty, tokenId, options = {}) {
 
   console.log('NFT Metadata:');
   console.log(colorize(JSON.stringify(nft.metadata), colorizeOptions));
-}
-
-async function pinNFTData(minty, tokenId, metadata, metadataURI) {
-  console.log('');
-  const { pinnedMetadataCID } = await minty.pinTokenData(
-    tokenId,
-    metadata,
-    metadataURI
-  );
-  console.log(`🌿 Pinned all data for token id ${chalk.green(tokenId)}`);
-  return pinnedMetadataCID;
 }
 
 function alignOutput(labelValuePairs) {

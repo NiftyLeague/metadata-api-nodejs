@@ -1,5 +1,6 @@
 const { ethers } = require('hardhat');
 const all = require('it-all');
+const chalk = require('chalk');
 const CID = require('cids');
 const fs = require('fs');
 const ipfsClient = require('ipfs-http-client');
@@ -106,9 +107,7 @@ class Minty {
    * @property {string} tokenId - the unique ID of the new token
    * @property {object} metadata - the JSON metadata stored in IPFS and referenced by the token's metadata URI
    * @property {string} assetURI - an ipfs:// URI for the NFT asset
-   * @property {string} metadataURI - an ipfs:// URI for the NFT metadata
    * @property {string} assetGatewayURL - an HTTP gateway URL for the NFT asset
-   * @property {string} metadataGatewayURL - an HTTP gateway URL for the NFT metadata
    *
    * @returns {Promise<GenerateNFTResult>}
    */
@@ -120,12 +119,12 @@ class Minty {
     // it gives us URIs with descriptive filenames in them e.g.
     // 'ipfs://QmaNZ2FCgvBPqnxtkbToVVbK2Nes6xk5K4Ns6BsmkPucAM/cat-pic.png' instead of
     // 'ipfs://QmaNZ2FCgvBPqnxtkbToVVbK2Nes6xk5K4Ns6BsmkPucAM'
-    console.log('Adding image to IPFS');
     const imgPath = `/${config.ipfs.baseDirName}/${basename}`;
     const { cid: assetCid } = await this.ipfs.add(
       { path: imgPath, content },
       ipfsOptions
     );
+    console.log('✅ Image pinned to IPFS');
 
     // make the NFT metadata JSON
     const assetURI = ensureIpfsUriPrefix(assetCid) + imgPath;
@@ -136,20 +135,11 @@ class Minty {
       assetURI
     );
 
-    const metadataPath = `/${config.ipfs.baseDirName}/metadata/${tokenId}`;
-    const { cid: metadataCid } = await this.ipfs.add(
-      { path: metadataPath, content: JSON.stringify(metadata) },
-      ipfsOptions
-    );
-    const metadataURI = ensureIpfsUriPrefix(metadataCid) + `/${tokenId}`;
-
     return {
       tokenId,
       metadata,
       assetURI,
-      metadataURI,
       assetGatewayURL: makeGatewayURL(assetURI),
-      metadataGatewayURL: makeGatewayURL(metadataURI),
     };
   }
 
@@ -189,7 +179,8 @@ class Minty {
       rarity < 3 ? 'png' : 'mp4'
     }`;
     const url = generateImageURL(traits, rarity);
-    console.log('Unity image url:', url);
+    console.log('🎮 Unity image url:', chalk.blue(url));
+    console.log('');
     await downloadImage(url, filePath);
     return filePath;
   }
@@ -413,28 +404,6 @@ class Minty {
   //////////////////////////////////////////////
   // -------- Pinning to remote services
   //////////////////////////////////////////////
-
-  /**
-   * Pins all IPFS data associated with the given tokend id to the remote pinning service.
-   *
-   * @param {string} tokenId - the ID of an NFT that was previously minted.
-   * @param {object} metadata - the JSON metadata stored in IPFS and referenced by the token's metadata URI
-   * @param {string} metadataURI - an ipfs:// URI for the NFT metadata
-   * @returns {Promise<{pinnedAssetCID: CID, pinnedMetadataCID: CID}>} - the IPFS asset and metadata CIDs that were pinned.
-   * Fails if URI unavailable or pinning fails.
-   */
-  async pinTokenData(tokenId, metadata, metadataURI) {
-    const { image: assetURI } = metadata;
-    console.log(`Pinning asset data (${assetURI}) for token id ${tokenId}....`);
-    await this.pin(assetURI);
-
-    console.log(`Pinning metadata (${metadataURI}) for token id ${tokenId}...`);
-    await this.pin(metadataURI);
-    return {
-      pinnedAssetCID: extractCID(assetURI),
-      pinnedMetadataCID: extractCID(metadataURI),
-    };
-  }
 
   /**
    * Request that the remote pinning service pin the given CID or ipfs URI.

@@ -1,7 +1,7 @@
 {
   "name": "Nifty Andy",
-  "image": "ipfs://bafybeifxrkma5fw4nhw5wuvfx7tcl42j4buimzfyije645xq32royrlhk4/nifty-degens/1.png",
-  "description": "🎮 Original collection of your favorite 10k DEGENs created by The Nifty League's multi-talented community!",
+  "image": "ipfs://bafybeigiahbdxakh6eahc4sk6t6vsscgt3euuvxdabw5ftaz3qvwwfjcem/nifty-degens/1.png",
+  "description": "Original collection of your favorite 10k DEGENs 🎮",
   "external_url": "https://nifty-league.com/degens/1",
   "attributes": [
     {
@@ -11,7 +11,7 @@
     },
     {
       "trait_type": "Rarity",
-      "value": "Rare"
+      "value": "Common"
     },
     {
       "trait_type": "Tribe",

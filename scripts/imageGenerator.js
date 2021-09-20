@@ -73,7 +73,7 @@ async function downloadImage(url, dest) {
     })
       .pipe(file)
       .on('finish', async () => {
-        console.log(`The file is finished downloading.`);
+        console.log(`✅ The file is finished downloading.`);
         resolve();
       })
       .on('error', error => {

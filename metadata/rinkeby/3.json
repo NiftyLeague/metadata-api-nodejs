@@ -1,7 +1,7 @@
 {
   "name": "Cat DEGEN #3",
-  "image": "ipfs://bafybeihj2h6hbpzpq3vdf3kmvcdldhififdtxpcqdjpxia4a5vdx5xqvxq/nifty-degens/3.mp4",
-  "description": "🎮 Original collection of your favorite 10k DEGENs created by The Nifty League's multi-talented community!",
+  "image": "ipfs://bafybeibgh47wtuqwnzaubitzojci3x7v47b55l4kdwh3by6oma56udog2q/nifty-degens/3.png",
+  "description": "Original collection of your favorite 10k DEGENs 🎮",
   "external_url": "https://nifty-league.com/degens/3",
   "attributes": [
     {
@@ -11,7 +11,7 @@
     },
     {
       "trait_type": "Rarity",
-      "value": "Legendary"
+      "value": "Common"
     },
     {
       "trait_type": "Tribe",
