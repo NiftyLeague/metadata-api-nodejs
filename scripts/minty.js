@@ -160,6 +160,7 @@ class Minty {
     const rarity = raritySelector();
     const filePath = await this.generateImage(tokenId, traits, rarity);
     const content = await fs.promises.readFile(filePath);
+    // Cleanup the local file
     return this.uploadNFTFromAssetData(
       tokenId,
       traits,
@@ -230,10 +231,11 @@ class Minty {
       external_url: `${config.metadata.externalURL}/${tokenId}`,
       attributes,
     };
-    fs.writeFileSync(
-      `./metadata/${this.targetNetwork}/${tokenId}.json`,
+    const metaAsset = await uploadToS3(
+      `${this.targetNetwork}/metadata/${tokenId}.json`,
       JSON.stringify(metadata, null, 2)
     );
+    console.log("✅ Metadata uploaded to S3");
     return metadata;
   }
 
