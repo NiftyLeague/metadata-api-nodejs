@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const fetch = require('node-fetch');
+const cors = require('cors');
 const path = require('path');
 
 const PORT = process.env.PORT || 5000;
@@ -13,6 +14,8 @@ const app = express()
 app.get('/', function (req, res) {
   res.send('OpenSea API for the Nifty League!');
 });
+
+app.use(cors());
 
 async function resolveMetadata(req) {
   const targetNetwork = req.params.network;
