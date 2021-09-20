@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const fetch = require('node-fetch');
-const cors = require('cors');
 const path = require('path');
 
 const PORT = process.env.PORT || 5000;
@@ -10,11 +9,6 @@ const app = express()
   .set('port', PORT)
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs');
-
-app.use(cors());
-
-// Static public files
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
   res.send('OpenSea API for the Nifty League!');

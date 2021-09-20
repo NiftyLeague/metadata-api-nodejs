@@ -19,8 +19,7 @@ async function main() {
   if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir);
 
   const minty = await MakeMinty();
-  // const tokenIds = [1, 2, 3, 4, 5, 6];
-  const tokenIds = [5];
+  const tokenIds = [1, 2, 3, 4, 5];
   for (const tokenId of tokenIds) {
     await safeGenerateNFT(minty, tokenId);
   }
