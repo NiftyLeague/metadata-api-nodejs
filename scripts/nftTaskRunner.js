@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define, no-await-in-loop */
-require('dotenv').config();
 const fs = require('fs');
 const { ethers } = require('hardhat');
 const config = require('getconfig');
@@ -26,26 +25,32 @@ async function main() {
   if (!fs.existsSync(metadataDir)) fs.mkdirSync(metadataDir);
 
   const minty = await MakeMinty();
-  const tokenIds = [1, 2, 3, 4, 5, 6];
+  // const tokenIds = [1, 2, 3, 4, 5, 6];
+  const tokenIds = [6];
   for (const tokenId of tokenIds) {
-    await getOrGenerateNFT(minty, tokenId);
+    await safeGenerateNFT(minty, tokenId);
   }
 }
 
-async function getOrGenerateNFT(minty, tokenId) {
-  // TODO: Check for token metadata to avoid processing new generation
-  // await getNFT(minty, tokenId);
-  console.log(`Generating asset and metadata for token id ${tokenId}:`);
-  const nft = await minty.generateNFT(tokenId);
-  console.log('');
-  alignOutput([
-    ['Token ID:', chalk.green(nft.tokenId)],
-    ['Asset Address:', chalk.blue(nft.assetURI)],
-    ['Asset Gateway URL:', chalk.blue(nft.assetGatewayURL)],
-  ]);
-  console.log('NFT Metadata:');
-  console.log(colorize(JSON.stringify(nft.metadata), colorizeOptions));
-  return { metadata: nft.metadata, metadataURI: nft.metadataURI };
+async function safeGenerateNFT(minty, tokenId) {
+  const { exists, metadata, metadataURI } =
+    await minty.checkTokenMetadataExists(tokenId);
+  if (exists) {
+    console.log(`Metadata already exists for token id ${tokenId}`);
+    return { metadata, metadataURI };
+  } else {
+    console.log(`Generating asset and metadata for token id ${tokenId}:`);
+    const nft = await minty.generateNFT(tokenId);
+    console.log('');
+    alignOutput([
+      ['Token ID:', chalk.green(nft.tokenId)],
+      ['Asset Address:', chalk.blue(nft.assetURI)],
+      ['Asset Gateway URL:', chalk.blue(nft.assetGatewayURL)],
+    ]);
+    console.log('NFT Metadata:');
+    console.log(colorize(JSON.stringify(nft.metadata), colorizeOptions));
+    return { metadata: nft.metadata, metadataURI: nft.metadataURI };
+  }
 }
 
 async function getNFT(minty, tokenId, options = {}) {

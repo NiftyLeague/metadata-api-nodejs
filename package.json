@@ -30,6 +30,7 @@
     "it-all": "^1.0.5",
     "json-colorizer": "^2.2.2",
     "moment": "^2.22.2",
+    "node-fetch": "^2.6.2",
     "uint8arrays": "^3.0.0"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
-const { ethers } = require('hardhat');
 const all = require('it-all');
 const chalk = require('chalk');
 const CID = require('cids');
+const fetch = require('node-fetch');
 const fs = require('fs');
 const ipfsClient = require('ipfs-http-client');
 const path = require('path');
@@ -65,10 +65,7 @@ class Minty {
   async init() {
     if (this._initialized) return;
 
-    // eslint-disable-next-line global-require
-    this.hardhat = require('hardhat');
     this.targetNetwork = config.hardhat.defaultNetwork;
-
     // connect to the smart contract using the address and ABI
     this.contract = await getContractFactory();
 
@@ -237,6 +234,25 @@ class Minty {
   //////////////////////////////////////////////
 
   /**
+   * Check if Metadata exists for tokenId
+   * @param {string} tokenId
+   *
+   * @typedef {object} ExistsInfo
+   * @property {boolean} tokenId
+   * @property {object} metadata
+   * @property {string} metadataURI
+   * @returns {Promise<ExistsInfo>}
+   */
+  async checkTokenMetadataExists(tokenId) {
+    const { metadata, metadataURI } = await this.getNFTMetadata(tokenId);
+    return {
+      exists: Boolean(metadata && Object.keys(metadata).length),
+      metadata,
+      metadataURI,
+    };
+  }
+
+  /**
    * Get information about an existing token.
    * By default, this includes the token id, owner address, metadata, and metadata URI.
    * To include info about when the token was created and by whom, set `opts.fetchCreationInfo` to true.
@@ -264,6 +280,7 @@ class Minty {
    */
   async getNFT(tokenId, opts) {
     const { metadata, metadataURI } = await this.getNFTMetadata(tokenId);
+    if (!metadata) return { metadata, metadataURI };
     const ownerAddress = await this.getTokenOwner(tokenId);
     const metadataGatewayURL = makeGatewayURL(metadataURI);
     const nft = {
@@ -298,7 +315,17 @@ class Minty {
    */
   async getNFTMetadata(tokenId) {
     const metadataURI = await this.contract.tokenURI(tokenId);
-    const metadata = await this.getIPFSJSON(metadataURI);
+    let metadata;
+    try {
+      if (metadataURI.startsWith('ipfs')) {
+        metadata = await this.getIPFSJSON(metadataURI);
+      } else {
+        const response = await fetch(metadataURI);
+        metadata = await response.json();
+      }
+    } catch (e) {
+      console.error('Error', e);
+    }
     return { metadata, metadataURI };
   }
 
@@ -460,6 +487,4 @@ class Minty {
   }
 }
 
-module.exports = {
-  MakeMinty,
-};
+module.exports = { MakeMinty };
