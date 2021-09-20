@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "aws-sdk": "^2.991.0",
     "chalk": "^4.1.2",
     "cids": "^1.1.9",
     "commander": "^8.2.0",

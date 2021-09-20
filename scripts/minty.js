@@ -25,6 +25,7 @@ const {
   downloadImage,
 } = require('./imageGenerator');
 const getContractFactory = require('./getContractFactory');
+const { uploadToS3 } = require('./uploadToS3');
 const {
   CHARACTER_RARITIES,
   CHARACTER_TRAIT_TYPES,
@@ -123,8 +124,15 @@ class Minty {
     );
     console.log('✅ Image pinned to IPFS');
 
+    const parsedPath = path.parse(basename);
+    const imageAsset = await uploadToS3(
+      `${this.targetNetwork}/images/${basename}`,
+      content
+    );
+    console.log('✅ Image uploaded to S3');
+
     // make the NFT metadata JSON
-    const assetURI = ensureIpfsUriPrefix(assetCid) + imgPath;
+    const assetURI = imageAsset.Location;
     const metadata = await this.makeNFTMetadata(
       tokenId,
       traits,
