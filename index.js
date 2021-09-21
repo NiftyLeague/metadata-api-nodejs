@@ -16,6 +16,8 @@ app.get('/', function (req, res) {
   res.send('OpenSea API for the Nifty League!');
 });
 
+app.use(express.bodyParser());
+
 app.use(cors());
 
 async function resolveMetadata(req) {
@@ -42,8 +44,7 @@ app.post(
   `/:network/webhooks/degen/${config.webhookSecret}`,
   async function (req, res) {
     const targetNetwork = req.params.network;
-    console.log('WEBHOOK REQUEST', req);
-    const transaction = await req.json();
+    const transaction = req.body;
     console.log('WEBHOOK transaction', transaction);
     res.sendStatus(200);
   }
