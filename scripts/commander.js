@@ -14,6 +14,8 @@ const { alignOutput } = require('./utils');
 const safeGenerateNFT = require('./safeGenerateNFT');
 const { getTxReceipt } = require('./getTxReceipt');
 
+const targetNetwork = config.hardhat.defaultNetwork;
+
 const colorizeOptions = {
   pretty: true,
   colors: {
@@ -66,13 +68,12 @@ async function main() {
 // ---- command action functions
 
 async function createNFT(tokenId) {
-  const targetNetwork = config.hardhat.defaultNetwork;
   await safeGenerateNFT(targetNetwork, tokenId);
 }
 
 async function getNFT(tokenId, options) {
   const { creationInfo: fetchCreationInfo } = options;
-  const minty = await MakeMinty();
+  const minty = await MakeMinty(targetNetwork);
   const nft = await minty.getNFT(tokenId, { fetchCreationInfo });
 
   const output = [
@@ -97,7 +98,7 @@ async function getNFT(tokenId, options) {
 }
 
 async function pinNFTData(tokenId) {
-  const minty = await MakeMinty();
+  const minty = await MakeMinty(targetNetwork);
   const { metadata, metadataURI } = await minty.getNFT(tokenId, {});
   const { pinnedMetadataCID } = await minty.pinTokenData(
     tokenId,
@@ -112,7 +113,7 @@ async function pinNFTData(tokenId) {
 }
 
 async function unpinCID(cid) {
-  const minty = await MakeMinty();
+  const minty = await MakeMinty(targetNetwork);
   await minty.unpin(new CID(cid));
   console.log(`✅ Unpinned all data for CID ${chalk.yellow(cid)}`);
 }

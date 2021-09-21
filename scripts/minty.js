@@ -43,8 +43,8 @@ const ipfsOptions = {
  * Construct and asynchronously initialize a new Minty instance.
  * @returns {Promise<Minty>} a new instance of Minty, ready to mint NFTs.
  */
-async function MakeMinty() {
-  const m = new Minty();
+async function MakeMinty(targetNetwork) {
+  const m = new Minty(targetNetwork);
   await m.init();
   return m;
 }
@@ -57,7 +57,8 @@ async function MakeMinty() {
  * To make one, use the async {@link MakeMinty} function.
  */
 class Minty {
-  constructor() {
+  constructor(targetNetwork) {
+    this.targetNetwork = targetNetwork;
     this._initialized = false;
     this.contract = null;
     this.ipfs = null;
@@ -65,10 +66,8 @@ class Minty {
 
   async init() {
     if (this._initialized) return;
-
-    this.targetNetwork = config.hardhat.defaultNetwork;
     // connect to the smart contract using the address and ABI
-    this.contract = await getContractFactory();
+    this.contract = await getContractFactory(this.targetNetwork);
 
     // create a local IPFS node
     this.ipfs = ipfsClient.create({

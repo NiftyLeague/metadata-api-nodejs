@@ -5,8 +5,7 @@ const config = require('getconfig');
 /**
  * Get NFT contract initialized with ABI & target address
  */
-async function getContractFactory() {
-  const targetNetwork = config.hardhat.defaultNetwork;
+async function getContractFactory(targetNetwork) {
   const contractName = config.hardhat.nftContractName;
   const abi = JSON.parse(
     fs.readFileSync(`./contracts/${contractName}.abi.json`, {

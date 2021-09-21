@@ -12,11 +12,11 @@ const colorizeOptions = {
   },
 };
 
-async function safeGenerateNFT(network, tokenId) {
-  const imagesDir = `./public/images/${network}`;
+async function safeGenerateNFT(targetNetwork, tokenId) {
+  const imagesDir = `./public/images/${targetNetwork}`;
   if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir);
 
-  const minty = await MakeMinty();
+  const minty = await MakeMinty(targetNetwork);
   const { exists, metadata, metadataURI } =
     await minty.checkTokenMetadataExists(tokenId);
   if (exists) {
