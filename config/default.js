@@ -1,6 +1,13 @@
 const config = {
   host: 'https://api.nifty-league.com',
-  webhookSecret: '$$WEBHOOK_SECRET',
+
+  blocknative: {
+    apiKey: {
+      mainnet: '$$BLOCKNATIVE_API_PROD',
+      rinkeby: '$$BLOCKNATIVE_API_DEV',
+    },
+    webhookSecret: '$$WEBHOOK_SECRET',
+  },
 
   hardhat: {
     defaultNetwork: '$$HARDHAT_NETWORK',

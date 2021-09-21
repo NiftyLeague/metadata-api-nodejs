@@ -5,6 +5,9 @@ const express = require('express');
 var bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const path = require('path');
+const safeGenerateNFT = require('./scripts/safeGenerateNFT');
+const { getTokenIdFromTxReceipt } = require('./scripts/getTxReceipt');
+const { CONTRACT_METHODS } = require('./constants');
 
 const PORT = process.env.PORT || 5000;
 
@@ -42,11 +45,24 @@ app.get('/:network/degen/:token_id/rarity', async function (req, res) {
 });
 
 app.post(
-  `/:network/webhooks/degen/${config.webhookSecret}`,
-  async function (req, res) {
+  `/:network/webhooks/degen/${config.blocknative.webhookSecret}`,
+  function (req, res) {
     const targetNetwork = req.params.network;
-    const transaction = req.body;
-    console.log('WEBHOOK transaction', transaction);
+    const tx = req.body;
+    console.log('WEBHOOK TX:', tx);
+    if (
+      tx.status === 'confirmed' &&
+      tx.direction === 'incoming' &&
+      tx.apiKey === config.blocknative.apiKey[targetNetwork]
+    ) {
+      if (tx.input.startsWith(CONTRACT_METHODS.PURCHASE)) {
+        const tokenId = await getTokenIdFromTxReceipt(tx.hash);
+        await safeGenerateNFT(targetNetwork, tokenId);
+      }
+      if (tx.input.startsWith(CONTRACT_METHODS.RENAME)) {
+        console.log('HANDLE CHANGE NAME:', tx);
+      }
+    }
     res.sendStatus(200);
   }
 );

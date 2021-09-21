@@ -9,8 +9,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "node test.js",
-    "nft-task-runner": "hardhat run scripts/nftTaskRunner.js"
+    "test": "node test.js"
   },
   "author": "Alex Atallah <alex.atallah@opensea.io>",
   "license": "MIT",
@@ -33,7 +32,8 @@
     "json-colorizer": "^2.2.2",
     "moment": "^2.22.2",
     "node-fetch": "^2.6.2",
-    "uint8arrays": "^3.0.0"
+    "uint8arrays": "^3.0.0",
+    "web3": "^1.5.2"
   },
   "devDependencies": {
     "request": "^2.81.0",

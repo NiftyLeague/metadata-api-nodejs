@@ -6,9 +6,13 @@
 const { Command } = require('commander');
 const chalk = require('chalk');
 const CID = require('cids');
+const config = require('getconfig');
 const colorize = require('json-colorizer');
 const path = require('path');
 const { MakeMinty } = require('./minty');
+const { alignOutput } = require('./utils');
+const safeGenerateNFT = require('./safeGenerateNFT');
+const { getTxReceipt } = require('./getTxReceipt');
 
 const colorizeOptions = {
   pretty: true,
@@ -20,6 +24,11 @@ const colorizeOptions = {
 
 async function main() {
   const program = new Command();
+
+  program
+    .command('create <token-id>')
+    .description('"create" nft image and metadata')
+    .action(createNFT);
 
   program
     .command('get <token-id>')
@@ -40,6 +49,11 @@ async function main() {
     .description('"unpin" any CID in your remote IPFS Pinning Service')
     .action(unpinCID);
 
+  program
+    .command('receipt <tx>')
+    .description('"tx" transaction hash to lookup')
+    .action(getTxReceipt);
+
   // The hardhat and getconfig modules both expect to be running from the root directory of the project,
   // so we change the current directory to the parent dir of this script file to make things work
   // even if you call minty from elsewhere
@@ -50,6 +64,11 @@ async function main() {
 }
 
 // ---- command action functions
+
+async function createNFT(tokenId) {
+  const targetNetwork = config.hardhat.defaultNetwork;
+  await safeGenerateNFT(targetNetwork, tokenId);
+}
 
 async function getNFT(tokenId, options) {
   const { creationInfo: fetchCreationInfo } = options;
@@ -96,17 +115,6 @@ async function unpinCID(cid) {
   const minty = await MakeMinty();
   await minty.unpin(new CID(cid));
   console.log(`✅ Unpinned all data for CID ${chalk.yellow(cid)}`);
-}
-
-// ---- helpers
-
-function alignOutput(labelValuePairs) {
-  const maxLabelLength = labelValuePairs
-    .map(([l, _]) => l.length)
-    .reduce((len, max) => (len > max ? len : max));
-  for (const [label, value] of labelValuePairs) {
-    console.log(label.padEnd(maxLabelLength + 1), value);
-  }
 }
 
 // ---- main entry point when running as a script

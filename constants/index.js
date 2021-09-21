@@ -23,6 +23,11 @@ const {
   RIGHT_ITEMS,
 } = require('./traitNames');
 
+const CONTRACT_METHODS = {
+  PURCHASE: '0x72c9f580',
+  RENAME: '0xc39cbef1',
+};
+
 const CHARACTER_RARITIES = ['Common', 'Rare', 'Meta', 'Legendary'];
 
 const CHARACTER_TRAIT_TYPES = [
@@ -76,6 +81,7 @@ const TRAIT_VALUE_MAP = {
 };
 
 module.exports = {
+  CONTRACT_METHODS,
   CHARACTER_RARITIES,
   CHARACTER_TRAIT_TYPES,
   TRAIT_VALUE_MAP,
