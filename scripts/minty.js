@@ -330,7 +330,7 @@ class Minty {
         metadata = await this.getIPFSJSON(metadataURI);
       } else {
         const response = await fetch(metadataURI);
-        metadata = await response.json();
+        if (response.status < 400) metadata = await response.json();
       }
     } catch (e) {
       console.error('Error', e);
