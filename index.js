@@ -53,27 +53,23 @@ app.get('/:network/degen/:token_id/rarity', async function (req, res) {
 app.post(
   `/:network/webhooks/degen/${config.blocknative.webhookSecret}`,
   async function (req, res) {
-    try {
-      const targetNetwork = req.params.network;
-      const tx = req.body;
-      console.log('WEBHOOK TX:', tx);
-      if (
-        tx.status === 'confirmed' &&
-        tx.direction === 'incoming' &&
-        tx.apiKey === config.blocknative.apiKey[targetNetwork]
-      ) {
-        if (tx.input.startsWith(CONTRACT_METHODS.PURCHASE)) {
-          const tokenId = await getTokenIdFromTxReceipt(tx.hash);
-          await safeGenerateNFT(targetNetwork, tokenId);
-        }
-        if (tx.input.startsWith(CONTRACT_METHODS.RENAME)) {
-          console.log('HANDLE CHANGE NAME:', tx);
-        }
+    const targetNetwork = req.params.network;
+    const tx = req.body;
+    console.log('WEBHOOK TX:', tx);
+    if (
+      tx.status === 'confirmed' &&
+      tx.direction === 'incoming' &&
+      tx.apiKey === config.blocknative.apiKey[targetNetwork]
+    ) {
+      if (tx.input.startsWith(CONTRACT_METHODS.PURCHASE)) {
+        const tokenId = await getTokenIdFromTxReceipt(tx.hash);
+        await safeGenerateNFT(targetNetwork, tokenId);
       }
-      res.sendStatus(200);
-    } catch (e) {
-      res.sendStatus(500);
+      if (tx.input.startsWith(CONTRACT_METHODS.RENAME)) {
+        console.log('HANDLE CHANGE NAME:', tx);
+      }
     }
+    res.sendStatus(200);
   }
 );
 
