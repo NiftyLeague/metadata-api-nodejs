@@ -40,9 +40,11 @@ app.get('/:network/degen/:token_id/rarity', async function (req, res) {
 
 app.post(
   `/:network/webhooks/degen/${config.webhookSecret}`,
-  function (req, res) {
+  async function (req, res) {
     const targetNetwork = req.params.network;
-    console.log('WEBHOOK REQUEST', req.body);
+    console.log('WEBHOOK REQUEST', req);
+    const transaction = await req.json();
+    console.log('WEBHOOK transaction', transaction);
     res.sendStatus(200);
   }
 );
