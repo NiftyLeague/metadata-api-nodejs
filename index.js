@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const path = require('path');
 const safeGenerateNFT = require('./scripts/safeGenerateNFT');
+const { handleNameChangeByInput } = require('./scripts/handleNameChange');
 const { getTokenIdFromTxReceipt } = require('./scripts/getTxReceipt');
 const { CONTRACT_METHODS } = require('./constants');
 
@@ -55,18 +56,19 @@ app.post(
   async function (req, res) {
     const targetNetwork = req.params.network;
     const tx = req.body;
-    console.log('WEBHOOK TX:', tx);
     if (
       tx.status === 'confirmed' &&
       tx.direction === 'incoming' &&
       tx.apiKey === config.blocknative.apiKey[targetNetwork]
     ) {
+      console.log('WEBHOOK TX:', tx);
       if (tx.input.startsWith(CONTRACT_METHODS.PURCHASE)) {
         const tokenId = await getTokenIdFromTxReceipt(tx.hash);
         await safeGenerateNFT(targetNetwork, tokenId);
       }
       if (tx.input.startsWith(CONTRACT_METHODS.RENAME)) {
-        console.log('HANDLE CHANGE NAME:', tx);
+        await getTokenIdFromTxReceipt(tx.hash);
+        await handleNameChangeByInput(targetNetwork, tx.input);
       }
     }
     res.sendStatus(200);

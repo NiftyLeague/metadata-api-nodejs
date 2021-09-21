@@ -12,6 +12,7 @@ const path = require('path');
 const { MakeMinty } = require('./minty');
 const { alignOutput } = require('./utils');
 const safeGenerateNFT = require('./safeGenerateNFT');
+const { handleNameChangeById } = require('./handleNameChange');
 const { getTxReceipt } = require('./getTxReceipt');
 
 const targetNetwork = config.hardhat.defaultNetwork;
@@ -31,6 +32,11 @@ async function main() {
     .command('create <token-id>')
     .description('"create" nft image and metadata')
     .action(createNFT);
+
+  program
+    .command('update <token-id>')
+    .description('"update" nft name in metadata')
+    .action(updateNFTName);
 
   program
     .command('get <token-id>')
@@ -69,6 +75,10 @@ async function main() {
 
 async function createNFT(tokenId) {
   await safeGenerateNFT(targetNetwork, tokenId);
+}
+
+async function updateNFTName(tokenId) {
+  await handleNameChangeById(targetNetwork, tokenId);
 }
 
 async function getNFT(tokenId, options) {

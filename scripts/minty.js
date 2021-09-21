@@ -237,6 +237,26 @@ class Minty {
     return metadata;
   }
 
+  /**
+   * Update token metadata with new name
+   * @param {string} tokenId
+   * @property {object} metadata
+   *
+   * @typedef {object} NameChangeInfo
+   * @property {object} newMetadata
+   * @returns {Promise<NameChangeInfo>}
+   */
+  async updateTokenName(tokenId, metadata) {
+    const name = await this.getName(tokenId);
+    const newMetadata = { ...metadata, name };
+    await uploadToS3(
+      `${this.targetNetwork}/metadata/${tokenId}.json`,
+      JSON.stringify(newMetadata, null, 2)
+    );
+    console.log('✅ Metadata uploaded to S3');
+    return { newMetadata };
+  }
+
   //////////////////////////////////////////////
   // -------- NFT Retreival
   //////////////////////////////////////////////
@@ -353,6 +373,16 @@ class Minty {
 
   /**
    * Get the traits for a specific token.
+   *
+   * @param {string} tokenId - the id of an existing token
+   * @returns {Promise<string>} - current name of token
+   */
+  async getName(tokenId) {
+    return this.contract.getName(tokenId);
+  }
+
+  /**
+   * Get the name for a specific token.
    *
    * @param {string} tokenId - the id of an existing token
    * @returns {Promise<[number]>} - list of character traits
