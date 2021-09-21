@@ -25,6 +25,7 @@ const {
   downloadImage,
 } = require('./imageGenerator');
 const getContractFactory = require('./getContractFactory');
+const refreshOpenSea = require('./refreshOpenSea');
 const { uploadToS3 } = require('./uploadToS3');
 const {
   CHARACTER_RARITIES,
@@ -137,6 +138,9 @@ class Minty {
       rarity,
       assetURI
     );
+
+    await refreshOpenSea(this.targetNetwork, tokenId);
+    console.log('✅ OpenSea force refresh triggered');
 
     return {
       tokenId,
@@ -254,6 +258,8 @@ class Minty {
       JSON.stringify(newMetadata, null, 2)
     );
     console.log('✅ Metadata uploaded to S3');
+    await refreshOpenSea(this.targetNetwork, tokenId);
+    console.log('✅ OpenSea force refresh triggered');
     return { newMetadata };
   }
 
