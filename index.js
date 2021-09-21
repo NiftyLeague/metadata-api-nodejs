@@ -30,7 +30,8 @@ async function resolveMetadata(req) {
     const tokenId = parseInt(req.params.token_id).toString();
     const metadataURI = `https://nifty-league.s3.amazonaws.com/degens/${targetNetwork}/metadata/${tokenId}.json`;
     const response = await fetch(metadataURI);
-    return response.json();
+    if (response.status < 400) return response.json();
+    return null;
   } catch (e) {
     return null;
   }
@@ -38,7 +39,8 @@ async function resolveMetadata(req) {
 
 app.get('/:network/degen/:token_id', async function (req, res) {
   const metadata = await resolveMetadata(req);
-  res.send(metadata);
+  if (metadata) res.send(metadata);
+  else res.sendStatus(404);
 });
 
 app.get('/:network/degen/:token_id/rarity', async function (req, res) {
