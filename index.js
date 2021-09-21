@@ -2,6 +2,7 @@ require('dotenv').config();
 const config = require('getconfig');
 const cors = require('cors');
 const express = require('express');
+var bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const path = require('path');
 
@@ -16,7 +17,7 @@ app.get('/', function (req, res) {
   res.send('OpenSea API for the Nifty League!');
 });
 
-app.use(express.bodyParser());
+app.use(bodyParser.json());
 
 app.use(cors());
 
