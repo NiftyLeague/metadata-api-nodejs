@@ -46,7 +46,7 @@ app.get('/:network/degen/:token_id/rarity', async function (req, res) {
 
 app.post(
   `/:network/webhooks/degen/${config.blocknative.webhookSecret}`,
-  function (req, res) {
+  async function (req, res) {
     const targetNetwork = req.params.network;
     const tx = req.body;
     console.log('WEBHOOK TX:', tx);
