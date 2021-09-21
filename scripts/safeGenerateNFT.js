@@ -14,7 +14,7 @@ const colorizeOptions = {
 
 async function safeGenerateNFT(targetNetwork, tokenId) {
   const imagesDir = `./public/images/${targetNetwork}`;
-  if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir);
+  if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir, { recursive: true });
 
   const minty = await MakeMinty(targetNetwork);
   const { exists, metadata, metadataURI } =
