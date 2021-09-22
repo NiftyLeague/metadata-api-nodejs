@@ -186,7 +186,7 @@ class Minty {
     const filePath = `./public/images/${this.targetNetwork}/${tokenId}.${
       rarity < 3 ? 'png' : 'mp4'
     }`;
-    const url = generateImageURL(traits, rarity);
+    const url = generateImageURL(traits, rarity, tokenId);
     console.log('🎮 Unity image url:', chalk.blue(url));
     console.log('');
     await downloadImage(url, filePath);
@@ -225,9 +225,7 @@ class Minty {
       }
     });
     const metadata = {
-      name:
-        (await this.contract.getName(tokenId)) ||
-        `${TRAIT_VALUE_MAP[traits[0]]} DEGEN #${tokenId}`,
+      name: (await this.contract.getName(tokenId)) || `DEGEN #${tokenId}`,
       image: ensureIpfsUriPrefix(assetURI),
       description: config.metadata.description,
       external_url: `${config.metadata.externalURL}/${tokenId}`,

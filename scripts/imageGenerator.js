@@ -23,7 +23,7 @@ function raritySelector(tokenId) {
  * @param {} traits - list of character traits from contract
  * @param {number} rarity - number of background rarity 0-3
  */
-function generateImageURL(traits, rarity) {
+function generateImageURL(traits, rarity, token) {
   const traitArray = [
     ['Tribe', traits[0]],
     ['Skin Color', traits[1]],
@@ -53,6 +53,7 @@ function generateImageURL(traits, rarity) {
     traits: JSON.stringify(traitArray),
     secret: config.imageGenerator.secret,
     rarity,
+    token,
   });
   return `${config.imageGenerator.baseURL}?${params.toString()}`;
 }
