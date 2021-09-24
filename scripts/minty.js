@@ -28,7 +28,7 @@ const getContractFactory = require('./getContractFactory');
 const refreshOpenSea = require('./refreshOpenSea');
 const { uploadToS3 } = require('./uploadToS3');
 const {
-  CHARACTER_RARITIES,
+  CHARACTER_BACKGROUNDS,
   CHARACTER_TRAIT_TYPES,
   TRAIT_VALUE_MAP,
 } = require('../constants');
@@ -214,7 +214,7 @@ class Minty {
   async makeNFTMetadata(tokenId, traits, rarity, assetURI) {
     const attributes = [
       { display_type: 'number', trait_type: 'Generation', value: 1 },
-      { trait_type: 'Rarity', value: CHARACTER_RARITIES[rarity] },
+      { trait_type: 'Background', value: CHARACTER_BACKGROUNDS[rarity] },
     ];
     traits.forEach((trait, i) => {
       if (trait !== 0) {

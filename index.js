@@ -44,6 +44,15 @@ app.get('/:network/degen/:token_id', async function (req, res) {
   else res.sendStatus(404);
 });
 
+app.get('/:network/degen/:token_id/background', async function (req, res) {
+  const metadata = await resolveMetadata(req);
+  const background = metadata?.attributes?.find(
+    a => a.trait_type === 'Background'
+  );
+  if (background) res.send(background.value);
+  else res.sendStatus(404);
+});
+
 app.get('/:network/degen/:token_id/rarity', async function (req, res) {
   const metadata = await resolveMetadata(req);
   const rarity = metadata?.attributes?.find(a => a.trait_type === 'Rarity');

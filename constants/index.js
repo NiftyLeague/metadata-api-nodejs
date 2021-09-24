@@ -28,7 +28,7 @@ const CONTRACT_METHODS = {
   RENAME: '0xc39cbef1',
 };
 
-const CHARACTER_RARITIES = ['Common', 'Rare', 'Meta', 'Legendary'];
+const CHARACTER_BACKGROUNDS = ['Common', 'Rare', 'Meta', 'Legendary'];
 
 const CHARACTER_TRAIT_TYPES = [
   'Tribe',
@@ -82,7 +82,7 @@ const TRAIT_VALUE_MAP = {
 
 module.exports = {
   CONTRACT_METHODS,
-  CHARACTER_RARITIES,
+  CHARACTER_BACKGROUNDS,
   CHARACTER_TRAIT_TYPES,
   TRAIT_VALUE_MAP,
 };
