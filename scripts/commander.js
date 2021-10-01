@@ -14,6 +14,7 @@ const { alignOutput } = require('./utils');
 const safeGenerateNFT = require('./safeGenerateNFT');
 const { handleNameChangeById } = require('./handleNameChange');
 const { getTxReceipt } = require('./getTxReceipt');
+const refreshOpenSea = require('./refreshOpenSea');
 
 const targetNetwork = config.hardhat.defaultNetwork;
 
@@ -32,6 +33,11 @@ async function main() {
     .command('create <token-id>')
     .description('"create" nft image and metadata')
     .action(createNFT);
+
+  program
+    .command('refresh')
+    .description('"refresh" nft image and metadata')
+    .action(refreshNFT);
 
   program
     .command('update <token-id>')
@@ -75,6 +81,12 @@ async function main() {
 
 async function createNFT(tokenId) {
   await safeGenerateNFT(targetNetwork, tokenId);
+}
+
+async function refreshNFT() {
+  for (let i = 1; i <= 9000; i++) {
+    await refreshOpenSea(targetNetwork, i);
+  }
 }
 
 async function updateNFTName(tokenId) {
