@@ -13,6 +13,7 @@ const { MakeMinty } = require('./minty');
 const { alignOutput } = require('./utils');
 const safeGenerateNFT = require('./safeGenerateNFT');
 const { handleNameChangeById } = require('./handleNameChange');
+const handleTraitCount = require('./handleTraitCount');
 const { getTxReceipt } = require('./getTxReceipt');
 const refreshOpenSea = require('./refreshOpenSea');
 
@@ -37,12 +38,17 @@ async function main() {
   program
     .command('refresh')
     .description('"refresh" nft image and metadata')
-    .action(refreshNFT);
+    .action(refreshNFTs);
+
+  program
+    .command('rename <token-id>')
+    .description('"rename" nft in metadata')
+    .action(updateNFTName);
 
   program
     .command('update <token-id>')
-    .description('"update" nft name in metadata')
-    .action(updateNFTName);
+    .description('"update" nft metadata')
+    .action(updateNFT);
 
   program
     .command('get <token-id>')
@@ -83,14 +89,21 @@ async function createNFT(tokenId) {
   await safeGenerateNFT(targetNetwork, tokenId);
 }
 
-async function refreshNFT() {
-  for (let i = 1; i <= 9000; i++) {
+async function refreshNFTs() {
+  for (let i = 1; i <= 9900; i++) {
     await refreshOpenSea(targetNetwork, i);
   }
 }
 
 async function updateNFTName(tokenId) {
   await handleNameChangeById(targetNetwork, tokenId);
+}
+
+async function updateNFT(tokenId) {
+  for (let i = 1; i <= 9900; i++) {
+    await handleTraitCount(targetNetwork, i);
+  }
+  // await handleTraitCount(targetNetwork, tokenId);
 }
 
 async function getNFT(tokenId, options) {

@@ -250,7 +250,29 @@ class Minty {
    */
   async updateTokenName(tokenId, metadata) {
     const name = await this.getName(tokenId);
-    const newMetadata = { ...metadata, name };
+    const newMetadata = { ...metadata, name: name || `DEGEN #${tokenId}` };
+    await uploadToS3(
+      `${this.targetNetwork}/metadata/${tokenId}.json`,
+      JSON.stringify(newMetadata, null, 2)
+    );
+    console.log('✅ Metadata uploaded to S3');
+    await refreshOpenSea(this.targetNetwork, tokenId);
+    console.log('✅ OpenSea force refresh triggered');
+    return { newMetadata };
+  }
+
+  /**
+   * Update token metadata with new name
+   * @param {string} tokenId
+   * @property {object} metadata
+   *
+   * @typedef {object} NameChangeInfo
+   * @property {object} newMetadata
+   * @returns {Promise<NameChangeInfo>}
+   */
+  async updateTokenTraitCount(tokenId, metadata) {
+    const allTraits = await this.getCharacterTraits(tokenId);
+    const newMetadata = { ...metadata };
     await uploadToS3(
       `${this.targetNetwork}/metadata/${tokenId}.json`,
       JSON.stringify(newMetadata, null, 2)
