@@ -16,6 +16,7 @@ const { handleNameChangeById } = require('./handleNameChange');
 const handleTraitCount = require('./handleTraitCount');
 const { getTxReceipt } = require('./getTxReceipt');
 const refreshOpenSea = require('./refreshOpenSea');
+const getTokenHolders = require('./covalent');
 
 const targetNetwork = config.hardhat.defaultNetwork;
 
@@ -49,6 +50,11 @@ async function main() {
     .command('update <token-id>')
     .description('"update" nft metadata')
     .action(updateNFT);
+
+  program
+    .command('token-holders')
+    .description('"get" degen token-holders')
+    .action(getTokenHolders);
 
   program
     .command('get <token-id>')

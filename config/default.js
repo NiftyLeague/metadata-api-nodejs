@@ -1,5 +1,6 @@
 const config = {
   host: 'https://api.nifty-league.com',
+  covalent: '$$COVALENT_API_KEY',
 
   blocknative: {
     apiKey: {
