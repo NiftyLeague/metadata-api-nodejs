@@ -2,8 +2,11 @@ const config = require('getconfig');
 const fs = require('fs');
 const fetch = require('node-fetch');
 
-async function refreshOpenSea(targetNetwork, tokenId) {
-  const contractName = config.hardhat.nftContractName;
+async function refreshOpenSea(
+  targetNetwork,
+  tokenId,
+  contractName = config.hardhat.nftContractName
+) {
   const addressPath = `./contracts/${contractName}.${targetNetwork}.address`;
   const address = fs.readFileSync(addressPath).toString();
   const baseURL = `https://${

@@ -25,11 +25,13 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-async function resolveMetadata(req) {
+async function resolveMetadata(req, degens = true) {
   try {
     const targetNetwork = req.params.network;
     const tokenId = parseInt(req.params.token_id).toString();
-    const metadataURI = `https://nifty-league.s3.amazonaws.com/degens/${targetNetwork}/metadata/${tokenId}.json`;
+    const metadataURI = degens
+      ? `https://nifty-league.s3.amazonaws.com/degens/${targetNetwork}/metadata/${tokenId}.json`
+      : `https://nifty-league.s3.amazonaws.com/launch-comics/metadata/${tokenId}.json`;
     const response = await fetch(metadataURI);
     if (response.status < 400) return response.json();
     return null;
@@ -57,6 +59,12 @@ app.get('/:network/degen/:token_id/rarity', async function (req, res) {
   const metadata = await resolveMetadata(req);
   const rarity = metadata?.attributes?.find(a => a.trait_type === 'Rarity');
   if (rarity) res.send(rarity.value);
+  else res.sendStatus(404);
+});
+
+app.get('/:network/launch-comics/:token_id', async function (req, res) {
+  const metadata = await resolveMetadata(req, false);
+  if (metadata) res.send(metadata);
   else res.sendStatus(404);
 });
 

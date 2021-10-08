@@ -17,6 +17,7 @@ const handleTraitCount = require('./handleTraitCount');
 const { getTxReceipt } = require('./getTxReceipt');
 const refreshOpenSea = require('./refreshOpenSea');
 const getTokenHolders = require('./covalent');
+const { combineSnapshotData, pinComic } = require('./comics');
 
 const targetNetwork = config.hardhat.defaultNetwork;
 
@@ -55,6 +56,16 @@ async function main() {
     .command('token-holders')
     .description('"get" degen token-holders')
     .action(getTokenHolders);
+
+  program
+    .command('format-comics')
+    .description('"format" degen token-holders snapshot data')
+    .action(combineSnapshotData);
+
+  program
+    .command('pin-comic <token-id>')
+    .description('"pin" degen comics metadata')
+    .action(pinComics);
 
   program
     .command('get <token-id>')
@@ -136,6 +147,13 @@ async function getNFT(tokenId, options) {
 
   console.log('NFT Metadata:');
   console.log(colorize(JSON.stringify(nft.metadata), colorizeOptions));
+}
+
+async function pinComics(tokenID) {
+  await pinComic(targetNetwork, tokenID);
+  // for (let i = 1; i <= 4; i++) {
+  //   await pinComic(targetNetwork, i);
+  // }
 }
 
 async function pinNFTData(tokenId) {

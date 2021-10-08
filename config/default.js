@@ -14,6 +14,7 @@ const config = {
     defaultNetwork: '$$HARDHAT_NETWORK',
     infura: '$$INFURA_PROJECT_ID',
     nftContractName: 'NiftyDegen',
+    comicsContractName: 'NiftyLaunchComics',
   },
 
   metadata: {

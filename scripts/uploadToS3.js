@@ -15,10 +15,15 @@ const mimeTypes = {
   '.json': 'application/json',
 };
 
-const uploadToS3 = async (fileName, content, retry = true) => {
+const uploadToS3 = async (
+  fileName,
+  content,
+  retry = true,
+  baseDirectory = config.s3.baseDirectory
+) => {
   const params = {
     Bucket: config.s3.bucket,
-    Key: `${config.s3.baseDirectory}/${fileName}`,
+    Key: `${baseDirectory}/${fileName}`,
     Body: content,
     ContentType: mimeTypes[path.extname(fileName)] || 'application/json',
     ACL: 'public-read',
