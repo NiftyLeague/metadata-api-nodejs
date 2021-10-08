@@ -21,22 +21,31 @@ const p4 = JSON.parse(fs.readFileSync('data/p4.json', { encoding: 'utf8' }));
 
 function combineSnapshotData() {
   const comics = {};
+  let p1count = 0;
+  let p2count = 0;
+  let p3count = 0;
+  let p4count = 0;
   p1.forEach(holder => {
     comics[holder.address] = {};
     comics[holder.address].p1 = holder.balance;
+    p1count += holder.balance;
   });
   p2.forEach(holder => {
     if (!comics[holder.address]) comics[holder.address] = {};
     comics[holder.address].p2 = holder.balance;
+    p2count += holder.balance;
   });
   p3.forEach(holder => {
     if (!comics[holder.address]) comics[holder.address] = {};
     comics[holder.address].p3 = holder.balance;
+    p3count += holder.balance;
   });
   p4.forEach(holder => {
     if (!comics[holder.address]) comics[holder.address] = {};
     comics[holder.address].p4 = holder.balance;
+    p4count += holder.balance;
   });
+  console.log(p1count, p2count, p3count, p4count);
   fs.writeFileSync(`data/comics.json`, JSON.stringify(comics, null, 2));
 }
 
