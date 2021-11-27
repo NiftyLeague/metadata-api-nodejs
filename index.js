@@ -25,6 +25,38 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function resolveCirculatingSupply(req) {
+  try {
+    const secret = process.env.ETHERSCAN_API_KEY;
+    const contractaddress = '0x3c8d2fce49906e11e71cb16fa0ffeb2b16c29638';
+    const supplyURI = `https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${contractaddress}&apikey=${secret}`;
+    const supplyRes = await fetch(supplyURI);
+    await sleep(5000);
+    const timelockaddress = '0xfeb2f45a3817ef9156a6c771ffc90098d3dfe003';
+    const timelockURI = `https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${contractaddress}&address=${timelockaddress}&tag=latest&apikey=${secret}`;
+    const lockedRes = await fetch(timelockURI);
+    if (supplyRes.status < 400 && lockedRes.status < 400) {
+      const { result: supply } = await supplyRes.json();
+      const { result: locked } = await lockedRes.json();
+      return BigInt(supply) - BigInt(locked);
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+app.get('/NFTL/supply', async function (req, res) {
+  const supply = await resolveCirculatingSupply(req);
+  console.log('supply', supply, supply.toString());
+  if (supply) res.send(supply.toString());
+  else res.sendStatus(404);
+});
+
 async function resolveMetadata(req) {
   try {
     const targetNetwork = req.params.network;
