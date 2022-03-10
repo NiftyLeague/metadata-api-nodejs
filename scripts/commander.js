@@ -48,6 +48,11 @@ async function main() {
     .action(updateNFTName);
 
   program
+    .command('rename-all')
+    .description('"rename" all degens in metadata')
+    .action(updateNFTNames);
+
+  program
     .command('update <token-id>')
     .description('"update" nft metadata')
     .action(updateNFT);
@@ -116,10 +121,16 @@ async function updateNFTName(tokenId) {
   await handleNameChangeById(targetNetwork, tokenId);
 }
 
-async function updateNFT(tokenId) {
+async function updateNFTNames() {
   for (let i = 1; i <= 9900; i++) {
-    await handleTraitCount(targetNetwork, i);
+    await updateNFTName(i);
   }
+}
+
+async function updateNFT(tokenId) {
+  // for (let i = 1; i <= 9900; i++) {
+  //   await handleTraitCount(targetNetwork, i);
+  // }
   // await handleTraitCount(targetNetwork, tokenId);
 }
 
@@ -151,7 +162,7 @@ async function getNFT(tokenId, options) {
 
 async function pinComics(tokenID) {
   await pinComic(targetNetwork, tokenID);
-  // for (let i = 1; i <= 4; i++) {
+  // for (let i = 1; i <= 6; i++) {
   //   await pinComic(targetNetwork, i);
   // }
 }
