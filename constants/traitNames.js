@@ -5,6 +5,7 @@ const TRIBES = {
   4: 'Frog',
   5: 'Cat',
   6: 'Alien',
+  7: '???',
 };
 const SKIN_COLORS = {
   // Ape
@@ -73,6 +74,18 @@ const SKIN_COLORS = {
   67: 'Sparky Blue',
   68: 'Cherry Soda',
   69: 'Begonia',
+  // ???
+  119: '???',
+  120: '???',
+  121: '???',
+  122: '???',
+  123: '???',
+  124: '???',
+  125: '???',
+  126: '???',
+  127: '???',
+  128: '???',
+  129: '???',
 };
 const FUR_COLORS = {
   // Ape
@@ -112,6 +125,8 @@ const FUR_COLORS = {
   99: 'Primrose Path',
   100: 'Sparky Blue',
   // Alien
+  // ???
+  130: '???',
 };
 const EYE_COLORS = {
   101: 'White',

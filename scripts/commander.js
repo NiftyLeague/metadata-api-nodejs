@@ -131,7 +131,7 @@ async function updateNFT(tokenId) {
   // for (let i = 1; i <= 9900; i++) {
   //   await handleTraitCount(targetNetwork, i);
   // }
-  // await handleTraitCount(targetNetwork, tokenId);
+  await handleTraitCount(targetNetwork, tokenId);
 }
 
 async function getNFT(tokenId, options) {

@@ -190,13 +190,14 @@ class Minty {
    */
   // eslint-disable-next-line class-methods-use-this
   async generateImage(tokenId, traits, rarity) {
-    const filePath = `./public/images/${this.targetNetwork}/${tokenId}.${
-      rarity < 3 ? 'png' : 'mp4'
-    }`;
-    const url = generateImageURL(traits, rarity, tokenId);
-    console.log('🎮 Unity image url:', chalk.blue(url));
-    console.log('');
-    await downloadImage(url, filePath);
+    // const filePath = `./public/images/${this.targetNetwork}/${tokenId}.${
+    //   rarity < 3 ? 'png' : 'mp4'
+    // }`;
+    const filePath = `./public/images/${this.targetNetwork}/${tokenId}.mp4`;
+    // const url = generateImageURL(traits, rarity, tokenId);
+    // console.log('🎮 Unity image url:', chalk.blue(url));
+    // console.log('');
+    // await downloadImage(url, filePath);
     return filePath;
   }
 
@@ -280,6 +281,17 @@ class Minty {
   async updateTokenTraitCount(tokenId, metadata) {
     const allTraits = await this.getCharacterTraits(tokenId);
     const newMetadata = { ...metadata };
+    newMetadata.attributes = [
+      ...newMetadata.attributes,
+      {
+        trait_type: 'Extra Trait Count',
+        value: 0,
+        display_type: 'number',
+      },
+      {
+        value: 'Naked Gang',
+      },
+    ];
     await uploadToS3(
       `${this.targetNetwork}/metadata/${tokenId}.json`,
       JSON.stringify(newMetadata, null, 2)
