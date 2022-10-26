@@ -4,8 +4,7 @@ const config = {
 
   blocknative: {
     apiKey: {
-      mainnet: '$$BLOCKNATIVE_API_PROD',
-      rinkeby: '$$BLOCKNATIVE_API_DEV',
+      degens: '$$BLOCKNATIVE_API_DEGENS',
     },
     webhookSecret: '$$WEBHOOK_SECRET',
   },

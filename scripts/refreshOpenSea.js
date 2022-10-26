@@ -10,7 +10,7 @@ async function refreshOpenSea(
   const addressPath = `./contracts/${contractName}.${targetNetwork}.address`;
   const address = fs.readFileSync(addressPath).toString();
   const baseURL = `https://${
-    targetNetwork === 'rinkeby' ? 'testnets-' : ''
+    targetNetwork === 'goerli' ? 'testnets-' : ''
   }api.opensea.io/api/v1/asset`;
   const openseaUpdateApi = `${baseURL}/${address}/${tokenId}/?force_update=true`;
   console.log(`Refreshing OpenSea data for tokenID:`, tokenId);

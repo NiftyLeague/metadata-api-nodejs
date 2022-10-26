@@ -70,7 +70,7 @@ npx go-ipfs daemon
 
 Here's a [tutorial on setting up a mintable NFT contract](https://docs.opensea.io/docs). Alternatively, you can have your buyers mint the tokens for you (and pay the gas to do that) at purchase-time, using the [OpenSea Crowdsale Tutorial](https://docs.opensea.io/docs/opensea-initial-item-sale-tutorial).
 
-Now that you a contract and a token URI for each of your tokens, there's a nice [mint.js script](https://github.com/ProjectOpenSea/opensea-creatures/blob/master/scripts/mint.js) that you can run locally to mint them on a testnet like Rinkeby and on mainnet Ethereum.
+Now that you a contract and a token URI for each of your tokens, there's a nice [mint.js script](https://github.com/ProjectOpenSea/opensea-creatures/blob/master/scripts/mint.js) that you can run locally to mint them on a testnet like Goerli and on mainnet Ethereum.
 
 If you want more control over the minting process, call [\_setTokenURI](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/1fd993bc01890bf6bd974aaf3d709bdf0a79b9bf/contracts/token/ERC721/ERC721Metadata.sol#L68) on your NFT's contract using the URL pattern above, either directly if you exposed that method for the contract `owner`, or by minting new tokens using [mintWithTokenURI](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC721/ERC721MetadataMintable.sol#L19).
 

@@ -7,6 +7,6 @@ module.exports = {
   solidity: '0.8.4',
   networks: {
     mainnet: { url: `https://mainnet.infura.io/v3/${config.hardhat.infura}` },
-    rinkeby: { url: `https://rinkeby.infura.io/v3/${config.hardhat.infura}` },
+    goerli: { url: `https://goerli.infura.io/v3/${config.hardhat.infura}` },
   },
 };

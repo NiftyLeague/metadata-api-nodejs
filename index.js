@@ -116,9 +116,10 @@ app.post(
     const targetNetwork = req.params.network;
     const tx = req.body;
     if (
+      targetNetwork === 'mainnet' &&
       tx.status === 'confirmed' &&
       tx.direction === 'incoming' &&
-      tx.apiKey === config.blocknative.apiKey[targetNetwork]
+      tx.apiKey === config.blocknative.apiKey.degens
     ) {
       console.log('WEBHOOK TX:', tx);
       if (tx.input.startsWith(CONTRACT_METHODS.PURCHASE)) {
